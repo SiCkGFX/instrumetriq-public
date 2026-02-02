@@ -12,7 +12,7 @@ Instrumetriq provides structured, research-grade data combining:
 
 - **Market microstructure** — Spot prices, spreads, depth, and liquidity metrics from Binance
 - **Social sentiment** — AI-classified X (Twitter) post sentiment with engagement context
-- **Temporal alignment** — All observations anchored to consistent 4-hour cycles
+- **Temporal alignment** — Each asset monitored ~120–130 minutes with 10-second sampling
 
 The dataset is designed for quantitative research, backtesting, and building contextual models around crypto asset behavior.
 
@@ -40,34 +40,35 @@ Sample parquet files are available in the [`/samples`](./samples) directory. Eac
 ```
 samples/
 ├── tier1/
-│   ├── SCHEMA_REFERENCE.md
-│   ├── load_data.py
+│   ├── tier1_schema_reference.md
+│   ├── inspect_tier1_schema.py
 │   └── 2026-02-01_tier1.parquet
 ├── tier2/
-│   ├── SCHEMA_REFERENCE.md
-│   ├── load_data.py
+│   ├── tier2_schema_reference.md
+│   ├── inspect_tier2_schema.py
 │   └── 2026-02-01_tier2.parquet
 └── tier3/
-    ├── SCHEMA_REFERENCE.md
-    ├── load_data.py
+    ├── tier3_schema_reference.md
+    ├── inspect_tier3_schema.py
     └── 2026-02-01_tier3.parquet
 ```
 
-Run any loader script to explore the data:
+Run any inspection script to explore the data (requires Python 3.9+):
 
 ```bash
-python samples/tier1/load_data.py
+pip install -r requirements.txt
+python samples/tier1/inspect_tier1_schema.py
 ```
 
 ---
 
 ## Documentation
 
-Each tier's sample folder includes a comprehensive `SCHEMA_REFERENCE.md` with exhaustive field-by-field documentation.
+Each tier's sample folder includes comprehensive schema documentation with field-by-field descriptions.
 
-- [Tier 1 Schema Reference](./samples/tier1/SCHEMA_REFERENCE.md) — 19 flat columns
-- [Tier 2 Schema Reference](./samples/tier2/SCHEMA_REFERENCE.md) — 8 nested columns  
-- [Tier 3 Schema Reference](./samples/tier3/SCHEMA_REFERENCE.md) — 12 nested columns with futures
+- [Tier 1 Schema Reference](./samples/tier1/tier1_schema_reference.md) — 19 flat columns
+- [Tier 2 Schema Reference](./samples/tier2/tier2_schema_reference.md) — 8 nested columns  
+- [Tier 3 Schema Reference](./samples/tier3/tier3_schema_reference.md) — 12 nested columns with futures
 - [Methodology](./docs/METHODOLOGY.md) — High-level overview of data collection
 
 ### File Format

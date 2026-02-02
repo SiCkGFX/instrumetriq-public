@@ -1,3 +1,4 @@
+# Python 3.9+ required
 pandas>=2.0
 pyarrow>=14.0
 numpy>=1.24
