@@ -20,11 +20,14 @@ The dataset is designed for quantitative research, backtesting, and building con
 
 ## Access Tiers
 
-| Tier | Name | Description |
-|------|------|-------------|
-| **Tier 1** | Explorer | Flat schema with 19 fields. Core metrics for quick analysis. |
-| **Tier 2** | Analyst | Nested schema with 8 top-level columns. Full spot market data, scoring factors, and sentiment detail. |
-| **Tier 3** | Researcher | Complete dataset with 12 columns including futures data, diagnostic flags, and multi-window sentiment. |
+| Aspect | Tier 1 Explorer | Tier 2 Analyst | Tier 3 Researcher |
+|--------|-----------------|----------------|-------------------|
+| Schema | Flat (19 columns) | Nested (8 columns) | Nested (12 columns) |
+| Spot data | Summary | Full | Full |
+| Futures data | — | — | ✓ |
+| Sentiment | Counts only | Full cycle | Multi-window |
+| Scoring factors | Final only | All factors | All factors + flags |
+| Price time series | — | — | ✓ (700+ samples) |
 
 [Compare access tiers →](https://instrumetriq.com/access)
 
@@ -53,9 +56,18 @@ See [`/examples`](./examples) for Python code to load and inspect the data.
 
 ## Documentation
 
-- [Schema Reference](./docs/SCHEMA.md) — Field listing and type information for all tiers
-- [Data Dictionary](./docs/DATA_DICTIONARY.md) — Canonical field definitions and descriptions
-- [Methodology](./docs/METHODOLOGY.md) — High-level overview of data collection and processing
+Each tier's sample folder includes a comprehensive `SCHEMA_REFERENCE.md` with exhaustive field-by-field documentation.
+
+- [Tier 1 Schema Reference](./samples/tier1/SCHEMA_REFERENCE.md) — 19 flat columns
+- [Tier 2 Schema Reference](./samples/tier2/SCHEMA_REFERENCE.md) — 8 nested columns  
+- [Tier 3 Schema Reference](./samples/tier3/SCHEMA_REFERENCE.md) — 12 nested columns with futures
+- [Methodology](./docs/METHODOLOGY.md) — High-level overview of data collection
+
+### File Format
+
+All tiers are distributed as Apache Parquet files with:
+- Snappy compression
+- Timestamps in ISO 8601 UTC format
 
 ---
 
