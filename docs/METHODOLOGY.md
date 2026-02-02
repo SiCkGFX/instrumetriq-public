@@ -19,7 +19,7 @@ Market data is sampled at regular intervals during each observation session.
 
 **Source**: X (Twitter) public posts
 
-Posts are captured for cryptocurrency-related terms and cashtags. Sentiment scraping operates on its own cycle (~49 minutes per complete pass through all tracked symbols), independent of the 2-hour watchlist sessions.
+Posts are captured for cryptocurrency-related terms and cashtags. Sentiment scraping operates on its own cycle (~49 minutes per complete pass through all tracked symbols). While independent of watchlist timing, the most recent sentiment cycle is assigned to a coin at admission time.
 
 ---
 
@@ -45,12 +45,12 @@ The hybrid approach provides robustness against model edge cases while capturing
 
 ### Session Duration
 
-Each watchlist session runs for **2 hours (7200 seconds)**:
+Each watchlist session runs for **~120–130 minutes**:
 - Symbols are admitted based on activity scoring
 - Market data is sampled every ~10 seconds throughout the session
-- Sessions typically accumulate 700–720 price samples before archival
+- Sessions typically accumulate **700+ price samples** before archival
 
-Sessions are **not** aligned to fixed UTC boundaries—they begin when a symbol is admitted to the watchlist and expire 2 hours later.
+Sessions are **not** aligned to fixed UTC boundaries—they begin when a symbol is admitted to the watchlist and expire after the monitoring window.
 
 ### Session Lifecycle
 
@@ -76,6 +76,8 @@ Sessions are **not** aligned to fixed UTC boundaries—they begin when a symbol 
 - Post-level 3-class classification
 - Aggregated counts and mean scores per observation window
 - Confidence metrics from model predictions
+
+**Note on positive skew**: As is common in cryptocurrency-related social media discourse, sentiment language is heavily skewed positive. The dataset preserves this property rather than normalizing it. The sentiment mean reflects narrative tone, while post volume, balance, and silence capture structural changes in discourse.
 
 ### Volume Context
 - Spot volume relative to historical norms
@@ -133,5 +135,3 @@ Tier 3 includes boolean flags indicating:
 Schema and methodology may evolve. Version numbers in metadata track changes:
 - `schema_version` — Document structure version
 - `archive_schema_version` — Version at time of archival
-
-See [SCHEMA.md](./SCHEMA.md) for current field definitions.
