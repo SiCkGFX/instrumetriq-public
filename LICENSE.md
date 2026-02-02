@@ -1,35 +1,68 @@
-# License
+# License & Usage
 
-## Sample Data
-
-The sample parquet files in the `/samples` directory are provided **for evaluation purposes only**.
-
-You may:
-- Download and inspect the sample data
-- Use samples to prototype data pipelines and analysis code
-- Reference the schema in academic or technical writing
-
-You may not:
-- Redistribute the sample files
-- Use samples as a substitute for the full dataset
-- Remove or alter attribution
-
-## Full Dataset
-
-Access to the complete Instrumetriq dataset requires an active Patreon subscription.
-
-[View subscription tiers →](https://instrumetriq.com/access)
-
-## Terms of Service
-
-For complete terms governing data access and usage, see:
-
-[instrumetriq.com/legal/terms](https://instrumetriq.com/legal/terms)
-
-## Documentation
-
-Documentation in this repository (markdown files, code examples) is provided under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+This repository contains **documentation and sample data** related to the
+Instrumetriq crypto market dataset. Different components of this repository
+are governed by different terms, as outlined below.
 
 ---
 
-© 2026 Instrumetriq
+## Sample Data (Evaluation Use Only)
+
+The parquet files provided in the `/samples` directory are **sample datasets**
+made available **solely for evaluation, inspection, and schema validation**.
+
+These sample files are intended to demonstrate:
+
+- dataset structure and field availability
+- schema consistency across tiers
+- data formatting and typing
+- example time alignment
+
+### Restrictions
+
+The sample data **may not** be:
+
+- redistributed in whole or in part
+- used in production systems
+- used as a substitute for the full dataset
+- republished, resold, or sublicensed
+
+Use of the sample data implies acceptance of these limitations.
+
+---
+
+## Documentation
+
+All documentation contained in this repository — including markdown files,
+schema references, and example inspection scripts — is licensed under the
+**Creative Commons Attribution 4.0 International License (CC BY 4.0)**.
+
+You are free to share and adapt the documentation content, provided that
+appropriate credit is given to Instrumetriq.
+
+License text:  
+https://creativecommons.org/licenses/by/4.0/
+
+---
+
+## Full Dataset Access
+
+Access to the complete Instrumetriq dataset is governed by Instrumetriq’s
+official Terms of Service and requires an active subscription.
+
+The authoritative and up-to-date terms are available at:  
+https://instrumetriq.com/legal/terms
+
+---
+
+## Attribution
+
+Any use of the sample data or documentation must retain references to
+Instrumetriq as the data provider.
+
+Citation metadata is provided in the `CITATION.cff` file at the root of this
+repository.
+
+---
+
+© 2026 Instrumetriq. All rights reserved.

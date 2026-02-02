@@ -69,7 +69,7 @@ Each tier's sample folder includes comprehensive schema documentation with field
 - [Tier 1 Schema Reference](./samples/tier1/tier1_schema_reference.md) — 19 flat columns
 - [Tier 2 Schema Reference](./samples/tier2/tier2_schema_reference.md) — 8 nested columns  
 - [Tier 3 Schema Reference](./samples/tier3/tier3_schema_reference.md) — 12 nested columns with futures
-- [Methodology](./docs/METHODOLOGY.md) — High-level overview of data collection
+- [Methodology](./docs/METHODOLOGY.md) — Conceptual overview of Instrumetriq’s data collection and processing approach.
 
 ### File Format
 

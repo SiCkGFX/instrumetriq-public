@@ -1,25 +1,34 @@
 cff-version: 1.2.0
-title: Instrumetriq Crypto Market Activity & Sentiment Context Dataset
+title: Instrumetriq — Crypto Market Activity & Sentiment Context Dataset
 message: >-
-  If you use this dataset, please cite it using the metadata from this file.
+  If you use this dataset in research, analysis, or derivative work,
+  please cite it using the metadata provided in this file.
 type: dataset
+
 authors:
   - name: Instrumetriq
-url: https://instrumetriq.com
+    website: https://instrumetriq.com
+
+url: https://instrumetriq.com/dataset
 repository-code: https://github.com/instrumetriq/instrumetriq-public
+
 abstract: >-
-  A time-aligned dataset capturing market micro-dynamics, participation
-  intensity, and social context around crypto assets. Combines Binance
-  spot and futures market data with AI-classified X (Twitter) sentiment
-  in consistent 4-hour observation windows.
+  A time-aligned dataset capturing crypto market activity, participation
+  intensity, and sentiment context around digital assets. The dataset
+  combines spot and derivatives market metrics with aggregated social
+  activity and sentiment distributions, aligned to fixed observation
+  windows. It is designed for research, monitoring, and feature
+  construction rather than predictive or trading signal generation.
+
 keywords:
   - cryptocurrency
-  - market data
-  - sentiment analysis
-  - binance
-  - twitter
-  - machine learning
-  - quantitative finance
+  - crypto market data
+  - market microstructure
+  - derivatives data
+  - social activity
+  - sentiment context
+  - research dataset
+
 license: CC-BY-4.0
 version: "1.0"
 date-released: "2026-02-01"
