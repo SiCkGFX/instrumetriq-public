@@ -1,32 +1,22 @@
 """
-Instrumetriq Sample Data Loader
+Instrumetriq Tier 1 Sample Loader
 
-Quick start script for loading and exploring the sample parquet files.
+Quick start script for loading and exploring the Tier 1 (Explorer) parquet file.
+Tier 1 has a flat schema with 19 columns.
 """
 
 import pandas as pd
+from pathlib import Path
 
 
-def load_tier1():
+def load_tier1(path: str = None) -> pd.DataFrame:
     """Load Tier 1 (Explorer) sample data."""
-    df = pd.read_parquet("samples/tier1/2026-02-01_tier1.parquet")
-    return df
-
-
-def load_tier2():
-    """Load Tier 2 (Analyst) sample data."""
-    df = pd.read_parquet("samples/tier2/2026-02-01_tier2.parquet")
-    return df
-
-
-def load_tier3():
-    """Load Tier 3 (Researcher) sample data."""
-    df = pd.read_parquet("samples/tier3/2026-02-01_tier3.parquet")
-    return df
+    if path is None:
+        path = Path(__file__).parent / "2026-02-01_tier1.parquet"
+    return pd.read_parquet(path)
 
 
 if __name__ == "__main__":
-    # Load Tier 1 sample
     df = load_tier1()
 
     print("=== Tier 1 Sample ===")
