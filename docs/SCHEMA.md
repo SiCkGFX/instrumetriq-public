@@ -1,6 +1,14 @@
 # Schema Reference
 
-This document describes the schema for each access tier of the Instrumetriq dataset.
+This document provides an overview of the schema for each access tier. For exhaustive field-by-field documentation, see the detailed references below.
+
+---
+
+## Detailed Schema References
+
+- [Tier 1 Schema Reference](./tier1/SCHEMA_REFERENCE.md) — 19 flat columns
+- [Tier 2 Schema Reference](./tier2/SCHEMA_REFERENCE.md) — 8 nested columns
+- [Tier 3 Schema Reference](./tier3/SCHEMA_REFERENCE.md) — 12 nested columns with futures data
 
 ---
 
@@ -15,12 +23,13 @@ This document describes the schema for each access tier of the Instrumetriq data
 | Sentiment | Counts only | Full cycle | Multi-window |
 | Scoring factors | Final only | All factors | All factors + flags |
 | Diagnostics | — | — | ✓ |
+| Price time series | — | — | ✓ (700+ samples) |
 
 ---
 
-## Tier 1: Explorer
+## Quick Column Overview
 
-Flat schema with 19 columns. All nested structures are flattened for simple analysis.
+### Tier 1: Explorer (19 columns)
 
 | Column | Type | Description |
 |--------|------|-------------|
@@ -44,11 +53,7 @@ Flat schema with 19 columns. All nested structures are flattened for simple anal
 | `sentiment_mean_score` | double | Mean hybrid sentiment score |
 | `sentiment_is_silent` | bool | No recent posts for this symbol |
 
----
-
-## Tier 2: Analyst
-
-Nested schema with 8 top-level columns providing full spot market detail and sentiment breakdown.
+### Tier 2: Analyst (8 columns)
 
 | Column | Type | Description |
 |--------|------|-------------|
@@ -61,55 +66,7 @@ Nested schema with 8 top-level columns providing full spot market detail and sen
 | `twitter_sentiment_meta` | struct | Sentiment capture metadata |
 | `twitter_sentiment_last_cycle` | struct | Full sentiment data for most recent cycle |
 
-### meta (Tier 2)
-
-| Field | Type |
-|-------|------|
-| `added_ts` | string |
-| `archive_schema_version` | int64 |
-| `duration_sec` | double |
-| `expires_ts` | string |
-| `schema_version` | int64 |
-| `session_id` | string |
-| `source` | string |
-| `universe_snapshot_ts` | string |
-
-### spot_raw (Tier 2)
-
-| Field | Type |
-|-------|------|
-| `ask` | double |
-| `bid` | double |
-| `mid` | double |
-| `last` | double |
-| `spread_bps` | double |
-| `depth_5bps_quote` | double |
-| `depth_10bps_quote` | double |
-| `depth_25bps_quote` | double |
-| `range_pct_24h` | double |
-| `ticker24_chg` | double |
-| `obi_5` | double |
-| `taker_buy_ratio_5m` | double |
-
-### scores (Tier 2)
-
-| Field | Type |
-|-------|------|
-| `final` | double |
-| `liq` | double |
-| `spread` | double |
-| `depth` | double |
-| `flow` | double |
-| `mom` | double |
-| `vol` | double |
-| `taker` | double |
-| `microstruct` | double |
-
----
-
-## Tier 3: Researcher
-
-Complete nested schema with 12 top-level columns including futures data, diagnostics, and multi-window sentiment.
+### Tier 3: Researcher (12 columns)
 
 | Column | Type | Description |
 |--------|------|-------------|
@@ -124,48 +81,7 @@ Complete nested schema with 12 top-level columns including futures data, diagnos
 | `diag` | struct | Diagnostic metadata |
 | `twitter_sentiment_windows` | struct | Multi-window sentiment (last_cycle, last_2_cycles) |
 | `twitter_sentiment_meta` | struct | Sentiment capture metadata |
-| `spot_prices` | list | Time series of spot price samples |
-
-### futures_raw (Tier 3 only)
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `contract` | string | Perpetual contract symbol |
-| `funding_now` | double | Current funding rate |
-| `funding_24h_mean` | double | 24-hour mean funding rate |
-| `open_interest` | double | Open interest in contracts |
-| `open_interest_5m_delta_pct` | double | 5-minute change in open interest |
-| `basis_now_bps` | double | Spot-futures basis in basis points |
-| `top_long_short_accounts_5m` | double | Long/short ratio by accounts |
-| `top_long_short_positions_5m` | double | Long/short ratio by positions |
-
-### flags (Tier 3 only)
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `spot_data_ok` | bool | Spot data passed validation |
-| `futures_data_ok` | bool | Futures data passed validation |
-| `futures_contract_exists` | bool | Perpetual contract available |
-| `twitter_data_ok` | bool | Sentiment data passed validation |
-| `compression_enabled` | bool | Compression scoring enabled |
-| `mom_fallback` | bool | Momentum used fallback calculation |
-| `vol_fallback` | bool | Volume used fallback calculation |
-| `spread_fallback` | bool | Spread used fallback calculation |
-
-### twitter_sentiment_windows (Tier 3 only)
-
-Contains two sub-structures:
-- `last_cycle` — Sentiment from most recent 4-hour cycle
-- `last_2_cycles` — Aggregated sentiment from past 8 hours
-
-Each includes:
-- `posts_total`, `posts_pos`, `posts_neu`, `posts_neg`
-- `ai_sentiment` — Model predictions and confidence
-- `hybrid_decision_stats` — Combined scoring metrics
-- `author_stats` — Follower counts and verification status
-- `platform_engagement` — Likes, retweets, views
-- `category_counts` — Lexicon category matches
-- `top_terms` — Frequent terms by category
+| `spot_prices` | list | Time series of spot price samples (700+) |
 
 ---
 
@@ -176,4 +92,9 @@ All tiers are distributed as Apache Parquet files with:
 - Row group size: ~50,000 rows
 - Timestamps in ISO 8601 UTC format
 
-See [DATA_DICTIONARY.md](./DATA_DICTIONARY.md) for detailed field definitions.
+---
+
+## See Also
+
+- [DATA_DICTIONARY.md](./DATA_DICTIONARY.md) — Canonical field definitions
+- [METHODOLOGY.md](./METHODOLOGY.md) — Data collection overview
