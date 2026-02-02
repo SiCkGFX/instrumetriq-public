@@ -1,8 +1,11 @@
-# Instrumetriq
+<p align="center">
+  <img src="./.assets/instrumetriq-logo-white.svg" alt="Instrumetriq" width="420">
+</p>
 
-**Crypto Market Activity & Sentiment Context Dataset**
-
-A time-aligned dataset capturing market micro-dynamics, participation intensity, and social context around crypto assets.
+<p align="center">
+  <strong>Crypto Market Activity & Sentiment Context Dataset</strong><br>
+  Time-aligned market data with social context and participation dynamics
+</p>
 
 ---
 
