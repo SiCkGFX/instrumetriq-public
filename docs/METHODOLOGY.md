@@ -19,7 +19,7 @@ Market data is sampled at regular intervals during each observation session.
 
 **Source**: X (Twitter) public posts
 
-Posts are captured for cryptocurrency-related terms and cashtags. Each observation window aligns with the 4-hour market session cycle.
+Posts are captured for cryptocurrency-related terms and cashtags. Sentiment scraping operates on its own cycle (~49 minutes per complete pass through all tracked symbols), independent of the 2-hour watchlist sessions.
 
 ---
 
@@ -43,20 +43,19 @@ The hybrid approach provides robustness against model edge cases while capturing
 
 ## Observation Windows
 
-### Time Alignment
+### Session Duration
 
-All observations are anchored to **4-hour cycles** aligned to UTC:
-- 00:00–04:00
-- 04:00–08:00
-- 08:00–12:00
-- 12:00–16:00
-- 16:00–20:00
-- 20:00–00:00
+Each watchlist session runs for **2 hours (7200 seconds)**:
+- Symbols are admitted based on activity scoring
+- Market data is sampled every ~10 seconds throughout the session
+- Sessions typically accumulate 700–720 price samples before archival
+
+Sessions are **not** aligned to fixed UTC boundaries—they begin when a symbol is admitted to the watchlist and expire 2 hours later.
 
 ### Session Lifecycle
 
 1. **Admission** — Symbol enters watchlist based on activity scoring
-2. **Sampling** — Market data captured at regular intervals (typically 2-hour sessions)
+2. **Sampling** — Market data captured every ~10 seconds for the 2-hour session duration
 3. **Archival** — Session data finalized and written to daily partition
 
 ---
