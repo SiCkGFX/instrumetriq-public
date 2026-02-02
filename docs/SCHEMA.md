@@ -6,9 +6,9 @@ This document provides an overview of the schema for each access tier. For exhau
 
 ## Detailed Schema References
 
-- [Tier 1 Schema Reference](./tier1/SCHEMA_REFERENCE.md) — 19 flat columns
-- [Tier 2 Schema Reference](./tier2/SCHEMA_REFERENCE.md) — 8 nested columns
-- [Tier 3 Schema Reference](./tier3/SCHEMA_REFERENCE.md) — 12 nested columns with futures data
+- [Tier 1 Schema Reference](../samples/tier1/SCHEMA_REFERENCE.md) — 19 flat columns
+- [Tier 2 Schema Reference](../samples/tier2/SCHEMA_REFERENCE.md) — 8 nested columns
+- [Tier 3 Schema Reference](../samples/tier3/SCHEMA_REFERENCE.md) — 12 nested columns with futures data
 
 ---
 

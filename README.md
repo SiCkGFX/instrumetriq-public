@@ -32,13 +32,19 @@ The dataset is designed for quantitative research, backtesting, and building con
 
 ## Free Samples
 
-Sample parquet files are available in the [`/samples`](./samples) directory. These contain one day of data for each tier, suitable for schema exploration and pipeline prototyping.
+Sample parquet files are available in the [`/samples`](./samples) directory. Each tier folder contains a sample parquet file and its schema reference documentation.
 
 ```
 samples/
-├── 2026-02-01_tier1.parquet
-├── 2026-02-01_tier2.parquet
-└── 2026-02-01_tier3.parquet
+├── tier1/
+│   ├── SCHEMA_REFERENCE.md
+│   └── 2026-02-01_tier1.parquet
+├── tier2/
+│   ├── SCHEMA_REFERENCE.md
+│   └── 2026-02-01_tier2.parquet
+└── tier3/
+    ├── SCHEMA_REFERENCE.md
+    └── 2026-02-01_tier3.parquet
 ```
 
 See [`/examples`](./examples) for Python code to load and inspect the data.

@@ -9,19 +9,19 @@ import pandas as pd
 
 def load_tier1():
     """Load Tier 1 (Explorer) sample data."""
-    df = pd.read_parquet("samples/2026-02-01_tier1.parquet")
+    df = pd.read_parquet("samples/tier1/2026-02-01_tier1.parquet")
     return df
 
 
 def load_tier2():
     """Load Tier 2 (Analyst) sample data."""
-    df = pd.read_parquet("samples/2026-02-01_tier2.parquet")
+    df = pd.read_parquet("samples/tier2/2026-02-01_tier2.parquet")
     return df
 
 
 def load_tier3():
     """Load Tier 3 (Researcher) sample data."""
-    df = pd.read_parquet("samples/2026-02-01_tier3.parquet")
+    df = pd.read_parquet("samples/tier3/2026-02-01_tier3.parquet")
     return df
 
 
