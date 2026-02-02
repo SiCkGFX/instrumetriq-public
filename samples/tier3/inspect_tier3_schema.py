@@ -10,9 +10,30 @@ Tier 3 has a nested schema with 12 top-level columns including futures data
 and 700+ price samples per record.
 """
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 from pathlib import Path
+from typing import Any, Optional
+
+# Formatting constants
+LINE_WIDTH = 70
+SECTION_WIDTH = 50
+
+
+# --- Helper functions for safe nested access ---
+
+def get_nested(obj: Any, *keys, default=None) -> Any:
+    """Safely extract nested value from dict/struct."""
+    for key in keys:
+        if obj is None or not isinstance(obj, dict):
+            return default
+        obj = obj.get(key, default)
+    return obj
+
+
+def extract_field(series: pd.Series, *keys, default=None) -> pd.Series:
+    """Extract nested field from a Series of dicts."""
+    return series.apply(lambda x: get_nested(x, *keys, default=default))
 
 
 def load_tier3(path: str = None) -> pd.DataFrame:
@@ -25,14 +46,14 @@ def load_tier3(path: str = None) -> pd.DataFrame:
 if __name__ == "__main__":
     df = load_tier3()
 
-    print("=" * 70)
+    print("=" * LINE_WIDTH)
     print("INSTRUMETRIQ TIER 3 (RESEARCHER) - SCHEMA INSPECTION")
-    print("=" * 70)
+    print("=" * LINE_WIDTH)
     print()
 
     # --- BASIC STRUCTURE ---
     print("1. BASIC STRUCTURE")
-    print("-" * 50)
+    print("-" * SECTION_WIDTH)
     print(f"   Total records:    {len(df):,}")
     print(f"   Total columns:    {len(df.columns)}")
     print(f"   Memory usage:     {df.memory_usage(deep=True).sum() / 1024 / 1024:.2f} MB")
@@ -40,7 +61,7 @@ if __name__ == "__main__":
 
     # --- SCHEMA ---
     print("2. SCHEMA (TOP-LEVEL COLUMNS)")
-    print("-" * 50)
+    print("-" * SECTION_WIDTH)
     for col in df.columns:
         null_count = df[col].isna().sum()
         null_pct = f"({null_count/len(df)*100:.1f}% null)" if null_count > 0 else "(complete)"
@@ -56,31 +77,43 @@ if __name__ == "__main__":
 
     # --- COVERAGE BY SYMBOL ---
     print("3. COVERAGE BY SYMBOL")
-    print("-" * 50)
+    print("-" * SECTION_WIDTH)
     symbol_counts = df['symbol'].value_counts()
     print(f"   Unique symbols:       {len(symbol_counts)}")
     print(f"   Records per symbol:   {symbol_counts.min()} to {symbol_counts.max()}")
-    print(f"   Distribution:")
-    for symbol, count in symbol_counts.items():
-        print(f"      {symbol:<10} {count:>5} records")
+    
+    # Show top 5 and bottom 5 only
+    if len(symbol_counts) > 10:
+        print(f"   Top 5 by record count:")
+        for symbol, count in symbol_counts.head(5).items():
+            print(f"      {symbol:<10} {count:>5} records")
+        print(f"   ...")
+        print(f"   Bottom 5 by record count:")
+        for symbol, count in symbol_counts.tail(5).items():
+            print(f"      {symbol:<10} {count:>5} records")
+    else:
+        for symbol, count in symbol_counts.items():
+            print(f"      {symbol:<10} {count:>5} records")
     print()
 
     # --- TIME ALIGNMENT ---
     print("4. TIME ALIGNMENT")
-    print("-" * 50)
-    df['snapshot_ts'] = pd.to_datetime(df['snapshot_ts'])
-    unique_timestamps = df['snapshot_ts'].nunique()
+    print("-" * SECTION_WIDTH)
+    timestamps = pd.to_datetime(df['snapshot_ts'])
+    unique_timestamps = timestamps.nunique()
     print(f"   Unique timestamps:    {unique_timestamps}")
-    print(f"   Time range:           {df['snapshot_ts'].min()} to {df['snapshot_ts'].max()}")
+    print(f"   Time range:           {timestamps.min()} to {timestamps.max()}")
     
-    ts_per_symbol = df.groupby('symbol')['snapshot_ts'].apply(set)
+    df_temp = df[['symbol']].copy()
+    df_temp['_ts'] = timestamps
+    ts_per_symbol = df_temp.groupby('symbol')['_ts'].apply(set)
     common_ts = set.intersection(*ts_per_symbol.values) if len(ts_per_symbol) > 1 else ts_per_symbol.iloc[0]
     print(f"   Shared timestamps:    {len(common_ts)} (across all symbols)")
     print()
 
     # --- NESTED STRUCT INSPECTION ---
     print("5. NESTED STRUCT INSPECTION")
-    print("-" * 50)
+    print("-" * SECTION_WIDTH)
     
     # spot_raw
     print("   spot_raw:")
@@ -107,11 +140,11 @@ if __name__ == "__main__":
     if flags_present > 0:
         sample_flags = df['flags'].dropna().iloc[0]
         print(f"      fields:  {list(sample_flags.keys())}")
-        # Show flag distributions
-        df['_spot_ok'] = df['flags'].apply(lambda x: x['spot_data_ok'] if x else None)
-        df['_twitter_ok'] = df['flags'].apply(lambda x: x['twitter_data_ok'] if x else None)
-        print(f"      spot_data_ok=True:    {df['_spot_ok'].sum()}/{len(df)}")
-        print(f"      twitter_data_ok=True: {df['_twitter_ok'].sum()}/{len(df)}")
+        # Show flag distributions using helper
+        spot_ok = extract_field(df['flags'], 'spot_data_ok')
+        twitter_ok = extract_field(df['flags'], 'twitter_data_ok')
+        print(f"      spot_data_ok=True:    {spot_ok.sum()}/{len(df)}")
+        print(f"      twitter_data_ok=True: {twitter_ok.sum()}/{len(df)}")
     print()
     
     # twitter_sentiment_windows (Tier 3 exclusive - multi-window)
@@ -125,67 +158,67 @@ if __name__ == "__main__":
 
     # --- TIME SERIES STRUCTURE ---
     print("6. TIME SERIES STRUCTURE (spot_prices)")
-    print("-" * 50)
-    df['_price_count'] = df['spot_prices'].apply(lambda x: len(x) if x is not None and len(x) > 0 else 0)
-    print(f"   Records with price data:  {(df['_price_count'] > 0).sum()}/{len(df)}")
-    print(f"   Samples per record:       {df['_price_count'].min()} to {df['_price_count'].max()}")
-    print(f"   Total price samples:      {df['_price_count'].sum():,}")
+    print("-" * SECTION_WIDTH)
+    price_counts = df['spot_prices'].apply(lambda x: len(x) if x is not None and len(x) > 0 else 0)
+    has_prices = price_counts > 0
+    print(f"   Records with price data:  {has_prices.sum()}/{len(df)}")
+    print(f"   Samples per record:       {price_counts.min()} to {price_counts.max()}")
+    print(f"   Total price samples:      {price_counts.sum():,}")
     
     # Inspect time span within price series
-    sample_prices = df[df['_price_count'] > 0].iloc[0]['spot_prices']
-    if sample_prices is not None and len(sample_prices) > 0:
-        first_ts = pd.to_datetime(sample_prices[0]['ts'])
-        last_ts = pd.to_datetime(sample_prices[-1]['ts'])
-        print(f"   Sample series span:       {last_ts - first_ts}")
-        print(f"   Sample series fields:     {list(sample_prices[0].keys())}")
+    if has_prices.any():
+        sample_prices = df.loc[has_prices, 'spot_prices'].iloc[0]
+        if sample_prices is not None and len(sample_prices) > 0:
+            first_ts = pd.to_datetime(sample_prices[0]['ts'])
+            last_ts = pd.to_datetime(sample_prices[-1]['ts'])
+            print(f"   Sample series span:       {last_ts - first_ts}")
+            print(f"   Sample series fields:     {list(sample_prices[0].keys())}")
     print()
 
     # --- EXTRACT NUMERIC FIELDS FOR CORRELATION ---
     print("7. CORRELATION MATRIX (NUMERIC FIELDS)")
-    print("-" * 50)
+    print("-" * SECTION_WIDTH)
     print("   Extracting numeric fields from nested structures...")
     
-    # Extract key numeric fields
-    df['spot_mid'] = df['spot_raw'].apply(lambda x: x['mid'] if x else None)
-    df['spot_spread_bps'] = df['spot_raw'].apply(lambda x: x['spread_bps'] if x else None)
-    df['score_final'] = df['scores'].apply(lambda x: x['final'] if x else None)
-    df['posts_total'] = df['twitter_sentiment_windows'].apply(
-        lambda x: x['last_cycle']['posts_total'] if x and x.get('last_cycle') else None
-    )
-    df['sentiment_score'] = df['twitter_sentiment_windows'].apply(
-        lambda x: x['last_cycle']['hybrid_decision_stats']['mean_score'] 
-        if x and x.get('last_cycle') and x['last_cycle'].get('hybrid_decision_stats') else None
-    )
-    df['funding_rate'] = df['futures_raw'].apply(
-        lambda x: x['funding_now'] if x and x.get('funding_now') else None
-    )
+    # Build a clean dataframe for correlation (no mutation of original)
+    corr_data = pd.DataFrame({
+        'spot_mid': extract_field(df['spot_raw'], 'mid'),
+        'spread_bps': extract_field(df['spot_raw'], 'spread_bps'),
+        'score_final': extract_field(df['scores'], 'final'),
+        'posts_total': extract_field(df['twitter_sentiment_windows'], 'last_cycle', 'posts_total'),
+        'sentiment': extract_field(df['twitter_sentiment_windows'], 'last_cycle', 'hybrid_decision_stats', 'mean_score'),
+        'funding': extract_field(df['futures_raw'], 'funding_now'),
+    })
     
-    # Build correlation matrix
-    corr_cols = ['spot_mid', 'spot_spread_bps', 'score_final', 'posts_total', 'sentiment_score', 'funding_rate']
-    corr_df = df[corr_cols].dropna()
+    corr_df = corr_data.dropna()
     
     if len(corr_df) > 5:
         print(f"   Records with all fields: {len(corr_df)}/{len(df)}")
         print()
         corr_matrix = corr_df.corr()
         
-        print("   Correlation Matrix:")
-        print("   " + "-" * 70)
-        # Header
-        header = "                    "
-        for col in corr_cols:
-            header += f"{col[:10]:>12}"
-        print("   " + header)
-        print("   " + "-" * 70)
+        # Pretty print correlation matrix
+        col_names = list(corr_df.columns)
+        col_width = 12
         
-        # Rows
-        for row_col in corr_cols:
-            row_str = f"   {row_col:<18}"
-            for col in corr_cols:
-                val = corr_matrix.loc[row_col, col]
-                row_str += f"{val:>12.3f}"
+        print("   Correlation Matrix:")
+        print("   " + "-" * (15 + col_width * len(col_names)))
+        
+        # Header row
+        header = "   " + " " * 15
+        for col in col_names:
+            header += f"{col:>{col_width}}"
+        print(header)
+        print("   " + "-" * (15 + col_width * len(col_names)))
+        
+        # Data rows
+        for row_name in col_names:
+            row_str = f"   {row_name:<15}"
+            for col_name in col_names:
+                row_str += f"{corr_matrix.loc[row_name, col_name]:>{col_width}.3f}"
             print(row_str)
-        print("   " + "-" * 70)
+        
+        print("   " + "-" * (15 + col_width * len(col_names)))
         print("   (Pearson correlation coefficients, no interpretation provided)")
     else:
         print(f"   Insufficient data with all fields for correlation ({len(corr_df)} records)")
@@ -193,19 +226,24 @@ if __name__ == "__main__":
 
     # --- DATA COMPLETENESS ---
     print("8. DATA COMPLETENESS SUMMARY")
-    print("-" * 50)
+    print("-" * SECTION_WIDTH)
+    
+    def count_present(col_name: str) -> int:
+        """Count non-null entries, with special handling for futures."""
+        if col_name == 'futures_raw':
+            return df['futures_raw'].apply(lambda x: x is not None and x.get('contract') is not None).sum()
+        elif col_name == 'spot_prices':
+            return df['spot_prices'].apply(lambda x: x is not None and len(x) > 0).sum()
+        else:
+            return df[col_name].notna().sum()
+    
     nested_cols = ['spot_raw', 'futures_raw', 'scores', 'flags', 
                    'twitter_sentiment_windows', 'twitter_sentiment_meta', 'spot_prices']
     for col in nested_cols:
-        if col == 'futures_raw':
-            present = df['futures_raw'].apply(lambda x: x is not None and x.get('contract') is not None).sum()
-        elif col == 'spot_prices':
-            present = (df['_price_count'] > 0).sum()
-        else:
-            present = df[col].notna().sum()
+        present = count_present(col)
         print(f"   {col:<35} {present:>5}/{len(df)} ({present/len(df)*100:.1f}%)")
     print()
 
-    print("=" * 70)
+    print("=" * LINE_WIDTH)
     print("Schema inspection complete. Research-grade data is structurally valid.")
-    print("=" * 70)
+    print("=" * LINE_WIDTH)

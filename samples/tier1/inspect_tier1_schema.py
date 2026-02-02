@@ -9,8 +9,11 @@ Tier 1 has a flat schema with 19 columns.
 """
 
 import pandas as pd
-import numpy as np
 from pathlib import Path
+
+# Formatting constants
+LINE_WIDTH = 60
+SECTION_WIDTH = 40
 
 
 def load_tier1(path: str = None) -> pd.DataFrame:
@@ -23,14 +26,14 @@ def load_tier1(path: str = None) -> pd.DataFrame:
 if __name__ == "__main__":
     df = load_tier1()
 
-    print("=" * 60)
+    print("=" * LINE_WIDTH)
     print("INSTRUMETRIQ TIER 1 (EXPLORER) - SCHEMA INSPECTION")
-    print("=" * 60)
+    print("=" * LINE_WIDTH)
     print()
 
     # --- BASIC STRUCTURE ---
     print("1. BASIC STRUCTURE")
-    print("-" * 40)
+    print("-" * SECTION_WIDTH)
     print(f"   Total records:    {len(df):,}")
     print(f"   Total columns:    {len(df.columns)}")
     print(f"   Memory usage:     {df.memory_usage(deep=True).sum() / 1024:.1f} KB")
@@ -38,7 +41,7 @@ if __name__ == "__main__":
 
     # --- SCHEMA ---
     print("2. SCHEMA (ALL COLUMNS)")
-    print("-" * 40)
+    print("-" * SECTION_WIDTH)
     for col in df.columns:
         null_count = df[col].isna().sum()
         null_pct = f"({null_count/len(df)*100:.1f}% null)" if null_count > 0 else "(complete)"
@@ -47,34 +50,46 @@ if __name__ == "__main__":
 
     # --- COVERAGE BY SYMBOL ---
     print("3. COVERAGE BY SYMBOL")
-    print("-" * 40)
+    print("-" * SECTION_WIDTH)
     symbol_counts = df['symbol'].value_counts()
     print(f"   Unique symbols:       {len(symbol_counts)}")
     print(f"   Records per symbol:   {symbol_counts.min()} to {symbol_counts.max()}")
-    print(f"   Distribution:")
-    for symbol, count in symbol_counts.items():
-        print(f"      {symbol:<10} {count:>5} records")
+    
+    # Show top 5 and bottom 5 only
+    if len(symbol_counts) > 10:
+        print(f"   Top 5 by record count:")
+        for symbol, count in symbol_counts.head(5).items():
+            print(f"      {symbol:<10} {count:>5} records")
+        print(f"   ...")
+        print(f"   Bottom 5 by record count:")
+        for symbol, count in symbol_counts.tail(5).items():
+            print(f"      {symbol:<10} {count:>5} records")
+    else:
+        for symbol, count in symbol_counts.items():
+            print(f"      {symbol:<10} {count:>5} records")
     print()
 
     # --- TIME ALIGNMENT ---
     print("4. TIME ALIGNMENT")
-    print("-" * 40)
-    df['snapshot_ts'] = pd.to_datetime(df['snapshot_ts'])
-    unique_timestamps = df['snapshot_ts'].nunique()
-    timestamp_range = df['snapshot_ts'].max() - df['snapshot_ts'].min()
+    print("-" * SECTION_WIDTH)
+    timestamps = pd.to_datetime(df['snapshot_ts'])
+    unique_timestamps = timestamps.nunique()
+    timestamp_range = timestamps.max() - timestamps.min()
     print(f"   Unique timestamps:    {unique_timestamps}")
-    print(f"   Time range:           {df['snapshot_ts'].min()} to {df['snapshot_ts'].max()}")
+    print(f"   Time range:           {timestamps.min()} to {timestamps.max()}")
     print(f"   Span:                 {timestamp_range}")
     
     # Check if all symbols share timestamps (alignment)
-    ts_per_symbol = df.groupby('symbol')['snapshot_ts'].apply(set)
+    df_temp = df.copy()
+    df_temp['_ts'] = timestamps
+    ts_per_symbol = df_temp.groupby('symbol')['_ts'].apply(set)
     common_ts = set.intersection(*ts_per_symbol.values) if len(ts_per_symbol) > 1 else ts_per_symbol.iloc[0]
     print(f"   Shared timestamps:    {len(common_ts)} (across all symbols)")
     print()
 
     # --- FIELD DISTRIBUTIONS (NON-OPINIONATED) ---
     print("5. FIELD DISTRIBUTIONS")
-    print("-" * 40)
+    print("-" * SECTION_WIDTH)
     
     # Sentiment score distribution
     print("   sentiment_mean_score:")
@@ -89,10 +104,17 @@ if __name__ == "__main__":
     bool_cols = ['sentiment_is_silent', 'sentiment_score_flip', 'sentiment_extreme_bearish', 'sentiment_extreme_bullish']
     for col in bool_cols:
         if col in df.columns:
-            true_count = df[col].sum()
+            # Handle both bool and object types (string 'True'/'False')
+            col_data = df[col]
+            if col_data.dtype == 'object':
+                true_count = (col_data == True) | (col_data == 'True')
+                true_count = true_count.sum()
+            else:
+                true_count = col_data.sum()
+            non_null = col_data.notna().sum()
             print(f"   {col}:")
-            print(f"      True:   {true_count:>5} ({true_count/len(df)*100:.1f}%)")
-            print(f"      False:  {len(df)-true_count:>5} ({(len(df)-true_count)/len(df)*100:.1f}%)")
+            print(f"      True:   {true_count:>5} ({true_count/non_null*100:.1f}% of non-null)")
+            print(f"      False:  {non_null - true_count:>5} ({(non_null - true_count)/non_null*100:.1f}% of non-null)")
     print()
 
     # Numeric field summaries
@@ -107,7 +129,7 @@ if __name__ == "__main__":
 
     # --- DATA COMPLETENESS ---
     print("6. DATA COMPLETENESS")
-    print("-" * 40)
+    print("-" * SECTION_WIDTH)
     total_cells = len(df) * len(df.columns)
     null_cells = df.isna().sum().sum()
     print(f"   Total cells:          {total_cells:,}")
@@ -115,6 +137,6 @@ if __name__ == "__main__":
     print(f"   Completeness:         {(total_cells - null_cells) / total_cells * 100:.2f}%")
     print()
 
-    print("=" * 60)
+    print("=" * LINE_WIDTH)
     print("Schema inspection complete. Data is structurally valid.")
-    print("=" * 60)
+    print("=" * LINE_WIDTH)
