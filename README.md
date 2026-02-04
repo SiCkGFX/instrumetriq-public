@@ -42,11 +42,11 @@ Sample parquet files are available in the [`/samples`](./samples) directory, org
 
 ```
 samples/
-├── scripts/
+├── inspect_parquets_schemas/
 │   ├── inspect_tier1_schema.py
 │   ├── inspect_tier2_schema.py
 │   └── inspect_tier3_schema.py
-├── schemas/
+├── schema_documentation/
 │   ├── tier1_schema_reference.md
 │   ├── tier2_schema_reference.md
 │   └── tier3_schema_reference.md
@@ -60,7 +60,7 @@ Run any inspection script to explore the data (requires Python 3.9+):
 
 ```bash
 pip install -r requirements.txt
-python samples/scripts/inspect_tier1_schema.py
+python samples/inspect_parquets_schemas/inspect_tier1_schema.py
 ```
 
 ---
@@ -69,9 +69,9 @@ python samples/scripts/inspect_tier1_schema.py
 
 Schema documentation with field-by-field descriptions for each tier:
 
-- [Tier 1 Schema Reference](./samples/schemas/tier1_schema_reference.md) — 19 flat columns
-- [Tier 2 Schema Reference](./samples/schemas/tier2_schema_reference.md) — 8 nested columns  
-- [Tier 3 Schema Reference](./samples/schemas/tier3_schema_reference.md) — 12 nested columns with futures
+- [Tier 1 Schema Reference](./samples/schema_documentation/tier1_schema_reference.md) — 19 flat columns
+- [Tier 2 Schema Reference](./samples/schema_documentation/tier2_schema_reference.md) — 8 nested columns  
+- [Tier 3 Schema Reference](./samples/schema_documentation/tier3_schema_reference.md) — 12 nested columns with futures
 - [Methodology](./docs/METHODOLOGY.md) — Conceptual overview of Instrumetriq's data collection and processing approach.
 
 ### File Format
