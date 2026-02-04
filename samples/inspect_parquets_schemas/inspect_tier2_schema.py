@@ -5,6 +5,7 @@ Validates structural integrity and displays coverage statistics
 for the nested 8-column Tier 2 dataset.
 """
 
+import time
 import pandas as pd
 from pathlib import Path
 
@@ -37,7 +38,9 @@ def describe_dtype(series: pd.Series) -> str:
 
 
 if __name__ == "__main__":
+    start = time.perf_counter()
     df = load_tier2()
+    load_time = time.perf_counter() - start
 
     print("=" * LINE_WIDTH)
     print("INSTRUMETRIQ TIER 2 (ANALYST) — SCHEMA INSPECTION")
@@ -102,5 +105,5 @@ if __name__ == "__main__":
     print()
 
     print("=" * LINE_WIDTH)
-    print("Inspection complete.")
+    print(f"Inspection complete. Parquet loaded in {load_time:.2f}s.")
     print("=" * LINE_WIDTH)
