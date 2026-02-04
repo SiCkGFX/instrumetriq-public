@@ -19,7 +19,15 @@ SECTION_WIDTH = 40
 def load_tier1(path: str = None) -> pd.DataFrame:
     """Load Tier 1 (Explorer) sample data."""
     if path is None:
-        path = Path(__file__).parent / "2026-02-01_tier1.parquet"
+        # Find latest week folder
+        samples_dir = Path(__file__).parent.parent
+        week_folders = sorted(samples_dir.glob("week_*"), reverse=True)
+        if not week_folders:
+            raise FileNotFoundError("No week_* folders found in samples/")
+        parquets = list(week_folders[0].glob("*_tier1.parquet"))
+        if not parquets:
+            raise FileNotFoundError(f"No tier1 parquet found in {week_folders[0]}")
+        path = parquets[0]
     return pd.read_parquet(path)
 
 

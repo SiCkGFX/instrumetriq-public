@@ -38,21 +38,21 @@ The dataset is designed for quantitative research, backtesting, and building con
 
 ## Free Samples
 
-Sample parquet files are available in the [`/samples`](./samples) directory. Each tier folder contains a sample parquet file, schema documentation, and a Python loader script.
+Sample parquet files are available in the [`/samples`](./samples) directory, organized by week. New samples are added weekly.
 
 ```
 samples/
-├── tier1/
-│   ├── tier1_schema_reference.md
+├── scripts/
 │   ├── inspect_tier1_schema.py
-│   └── 2026-02-01_tier1.parquet
-├── tier2/
-│   ├── tier2_schema_reference.md
 │   ├── inspect_tier2_schema.py
-│   └── 2026-02-01_tier2.parquet
-└── tier3/
-    ├── tier3_schema_reference.md
-    ├── inspect_tier3_schema.py
+│   └── inspect_tier3_schema.py
+├── schemas/
+│   ├── tier1_schema_reference.md
+│   ├── tier2_schema_reference.md
+│   └── tier3_schema_reference.md
+└── week_2026-02-01/
+    ├── 2026-02-01_tier1.parquet
+    ├── 2026-02-01_tier2.parquet
     └── 2026-02-01_tier3.parquet
 ```
 
@@ -60,19 +60,19 @@ Run any inspection script to explore the data (requires Python 3.9+):
 
 ```bash
 pip install -r requirements.txt
-python samples/tier1/inspect_tier1_schema.py
+python samples/scripts/inspect_tier1_schema.py
 ```
 
 ---
 
 ## Documentation
 
-Each tier's sample folder includes comprehensive schema documentation with field-by-field descriptions.
+Schema documentation with field-by-field descriptions for each tier:
 
-- [Tier 1 Schema Reference](./samples/tier1/tier1_schema_reference.md) — 19 flat columns
-- [Tier 2 Schema Reference](./samples/tier2/tier2_schema_reference.md) — 8 nested columns  
-- [Tier 3 Schema Reference](./samples/tier3/tier3_schema_reference.md) — 12 nested columns with futures
-- [Methodology](./docs/METHODOLOGY.md) — Conceptual overview of Instrumetriq’s data collection and processing approach.
+- [Tier 1 Schema Reference](./samples/schemas/tier1_schema_reference.md) — 19 flat columns
+- [Tier 2 Schema Reference](./samples/schemas/tier2_schema_reference.md) — 8 nested columns  
+- [Tier 3 Schema Reference](./samples/schemas/tier3_schema_reference.md) — 12 nested columns with futures
+- [Methodology](./docs/METHODOLOGY.md) — Conceptual overview of Instrumetriq's data collection and processing approach.
 
 ### File Format
 

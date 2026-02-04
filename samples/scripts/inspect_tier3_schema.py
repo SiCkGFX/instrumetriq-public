@@ -22,6 +22,21 @@ SECTION_WIDTH = 50
 
 # --- Helper functions for safe nested access ---
 
+def load_tier3(path: str = None) -> pd.DataFrame:
+    """Load Tier 3 (Researcher) sample data."""
+    if path is None:
+        # Find latest week folder
+        samples_dir = Path(__file__).parent.parent
+        week_folders = sorted(samples_dir.glob("week_*"), reverse=True)
+        if not week_folders:
+            raise FileNotFoundError("No week_* folders found in samples/")
+        parquets = list(week_folders[0].glob("*_tier3.parquet"))
+        if not parquets:
+            raise FileNotFoundError(f"No tier3 parquet found in {week_folders[0]}")
+        path = parquets[0]
+    return pd.read_parquet(path)
+
+
 def get_nested(obj: Any, *keys, default=None) -> Any:
     """Safely extract nested value from dict/struct."""
     for key in keys:
@@ -34,13 +49,6 @@ def get_nested(obj: Any, *keys, default=None) -> Any:
 def extract_field(series: pd.Series, *keys, default=None) -> pd.Series:
     """Extract nested field from a Series of dicts."""
     return series.apply(lambda x: get_nested(x, *keys, default=default))
-
-
-def load_tier3(path: str = None) -> pd.DataFrame:
-    """Load Tier 3 (Researcher) sample data."""
-    if path is None:
-        path = Path(__file__).parent / "2026-02-01_tier3.parquet"
-    return pd.read_parquet(path)
 
 
 if __name__ == "__main__":
