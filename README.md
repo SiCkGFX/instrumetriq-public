@@ -9,6 +9,7 @@
 
 <p align="center">
   <a href="https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"></a>&nbsp;
+  <a href="https://doi.org/10.5281/zenodo.18508637"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18508637.svg" alt="DOI"></a>&nbsp;
   <a href="https://github.com/SiCkGFX/instrumetriq-public/releases/latest"><img src="https://img.shields.io/github/v/release/SiCkGFX/instrumetriq-public?label=latest%20sample&color=blue" alt="Latest Release"></a>&nbsp;
   <a href="./LICENSE.md"><img src="https://img.shields.io/badge/license-CC%20BY%204.0%20%2F%20eval--only-lightgrey" alt="License"></a>&nbsp;
   <img src="https://img.shields.io/badge/python-3.9%2B-3776ab" alt="Python 3.9+">&nbsp;
