@@ -59,10 +59,17 @@ samples/
 │   ├── tier1_schema_reference.md
 │   ├── tier2_schema_reference.md
 │   └── tier3_schema_reference.md
-└── week_2026-02-01/
-    ├── 2026-02-01_tier1.parquet
-    ├── 2026-02-01_tier2.parquet
-    └── 2026-02-01_tier3.parquet
+├── week_2025-12-21/          ← #1
+├── week_2025-12-28/          ← #2
+├── week_2026-01-04/          ← #3
+├── week_2026-01-11/          ← #4
+├── week_2026-01-18/          ← #5
+├── week_2026-01-25/          ← #6
+└── week_2026-02-01/          ← #7 (latest)
+    ├── {date}_tier1.parquet
+    ├── {date}_tier2.parquet
+    ├── {date}_tier3.parquet
+    └── {date}_tier1.csv
 ```
 
 **Quickest way to explore:** [Open the Colab notebook](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb) — loads the Tier 1 sample, shows schema, sentiment distribution, and liquidity analysis in your browser.
