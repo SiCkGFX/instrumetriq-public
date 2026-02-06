@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_%E2%80%94_Dataset_Demo_(Colab).ipynb">
+  <a href="https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb">
     <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab">
   </a>
 </p>
@@ -25,7 +25,7 @@ Instrumetriq provides structured, research-grade data combining:
 
 The dataset is designed for quantitative research, backtesting, and building contextual models around crypto asset behavior.
 
-> **New here?** [Open the interactive demo in Google Colab](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_%E2%80%94_Dataset_Demo_(Colab).ipynb) — no install required.
+> **New here?** [Open the interactive demo in Google Colab](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb) — no install required.
 
 ---
 
@@ -50,7 +50,7 @@ Sample parquet files are available in the [`/samples`](./samples) directory, org
 
 ```
 samples/
-├── Instrumetriq_—_Dataset_Demo_(Colab).ipynb   ← interactive demo
+├── Instrumetriq_Dataset_Demo_Colab.ipynb   ← interactive demo
 ├── inspect_parquets_schemas/
 │   ├── inspect_tier1_schema.py
 │   ├── inspect_tier2_schema.py
@@ -65,7 +65,7 @@ samples/
     └── 2026-02-01_tier3.parquet
 ```
 
-**Quickest way to explore:** [Open the Colab notebook](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_%E2%80%94_Dataset_Demo_(Colab).ipynb) — loads the Tier 1 sample, shows schema, sentiment distribution, and liquidity analysis in your browser.
+**Quickest way to explore:** [Open the Colab notebook](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb) — loads the Tier 1 sample, shows schema, sentiment distribution, and liquidity analysis in your browser.
 
 Or run any inspection script locally (requires Python 3.9+):
 
