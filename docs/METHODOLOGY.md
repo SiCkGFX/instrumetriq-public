@@ -31,13 +31,18 @@ Sentiment classification uses a custom-trained DistilBERT model fine-tuned on cr
 
 **Classification scheme**: 3-class (positive, neutral, negative)
 
-### Hybrid Scoring
+### Two-Model Scoring
 
-Final sentiment scores combine:
-1. **AI model predictions** — DistilBERT probability outputs
-2. **Lexicon signals** — Domain-specific term matching for crypto slang, FUD indicators, and hype patterns
+Final sentiment scores are produced by a **two-model DistilBERT ensemble**:
+1. **Primary model** — Best raw classification accuracy
+2. **Referee model** — Best-calibrated confidence scores
 
-The hybrid approach provides robustness against model edge cases while capturing crypto-native language patterns.
+The referee's confidence drives the final decision:
+- If the referee is uncertain (confidence in the neutral band), the tweet is classified as neutral
+- If the referee is highly confident and disagrees with the primary, the referee's label is used
+- Otherwise, the primary model's label is used
+
+This produces a 3-class output (positive, neutral, negative) from two binary classifiers, with the neutral class emerging from calibrated uncertainty rather than a dedicated training label.
 
 ---
 
@@ -49,8 +54,6 @@ Each watchlist session runs for **~120–130 minutes**:
 - Symbols are admitted based on activity scoring
 - Market data is sampled every ~10 seconds throughout the session
 - Sessions typically accumulate **700+ price samples** before archival
-
-Sessions are **not** aligned to fixed UTC boundaries—they begin when a symbol is admitted to the watchlist and expire after the monitoring window.
 
 ### Session Lifecycle
 
@@ -116,8 +119,8 @@ Tier 3 includes boolean flags indicating:
 - Corresponding USDT perpetual contracts (where available)
 
 ### Filtering
-- Minimum liquidity thresholds for admission
-- Activity-based scoring determines watchlist inclusion
+- Data completeness is required for admission — both market data from Binance and a sentiment cycle from the scraper must be present
+- Symbols with missing fields from either source are excluded from the watchlist for that monitoring period
 
 ---
 
