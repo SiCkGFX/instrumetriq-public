@@ -23,7 +23,7 @@
 Instrumetriq provides structured, research-grade data combining:
 
 - **Market microstructure** — Spot prices, spreads, depth, and liquidity metrics from Binance
-- **Social sentiment** — AI-classified X (Twitter) post sentiment with engagement context
+- **Social sentiment** — AI-classified X (Twitter) post sentiment with crypto relevance filtering and engagement context
 - **Temporal alignment** — Each asset monitored ~120–130 minutes with 10-second sampling
 
 The dataset is designed for quantitative research, backtesting, and building contextual models around crypto asset behavior.
@@ -93,7 +93,7 @@ Schema documentation with field-by-field descriptions for each tier:
 - [Tier 1 Schema Reference](./samples/schema_documentation/tier1_schema_reference.md) — 19 flat columns
 - [Tier 2 Schema Reference](./samples/schema_documentation/tier2_schema_reference.md) — 8 nested columns  
 - [Tier 3 Schema Reference](./samples/schema_documentation/tier3_schema_reference.md) — 12 nested columns with futures
-- [Methodology](./docs/METHODOLOGY.md) — Conceptual overview of Instrumetriq's data collection and processing approach.
+- [Methodology](./docs/METHODOLOGY.md) — Data collection, sentiment pipeline (V2: BERTweet + DistilBERT with crypto relevance filtering), and observation windows.
 
 ### File Format
 

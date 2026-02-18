@@ -19,30 +19,50 @@ Market data is sampled at regular intervals during each observation session.
 
 **Source**: X (Twitter) public posts
 
-Posts are captured for cryptocurrency-related terms and cashtags. Sentiment scraping operates on its own cycle (~49 minutes per complete pass through all tracked symbols). While independent of watchlist timing, the most recent sentiment cycle is assigned to a coin at admission time.
+Posts are captured for cryptocurrency-related terms and cashtags. Sentiment scraping operates on its own cycle (~60 minutes per complete pass through all tracked symbols). While independent of watchlist timing, the most recent sentiment cycle is assigned to a coin at admission time.
 
 ---
 
 ## Sentiment Analysis
 
-### Model Architecture
+### Pipeline (V2 — current, since February 2026)
 
-Sentiment classification uses a custom-trained DistilBERT model fine-tuned on cryptocurrency-specific text.
+Posts pass through the following stages before aggregation:
 
-**Classification scheme**: 3-class (positive, neutral, negative)
+1. **Collection** — Public posts are retrieved from X (Twitter) via asset-specific queries.
+2. **Deduplication** — Previously observed posts are identified and removed. Each post is scored at most once.
+3. **Crypto relevance filtering** — A dedicated BERTweet-based classification model evaluates whether each post pertains to cryptocurrency. Off-topic posts are excluded before sentiment scoring. Filtered posts are retained separately for auditing.
+4. **Primary sentiment scoring** — Each relevant post is scored by a domain-specific BERTweet-based sentiment model trained on crypto-related language. Classification scheme: 3-class (positive, neutral, negative).
+5. **Secondary confidence scoring** — A second model, based on the DistilBERT architecture, independently evaluates each post. Its confidence determines whether the primary classification is accepted, overridden, or forced to neutral.
+6. **Cycle-level aggregation** — Individual post scores are aggregated into cycle-level metrics (pos/neu/neg ratios, mean score, decision source statistics).
+7. **Silence handling** — Periods of low or absent posting activity are tracked explicitly via `recent_posts_count`, `is_silent`, and `hours_since_latest_tweet`.
 
-### Two-Model Scoring
+### Referee Adjudication
 
-Final sentiment scores are produced by a **two-model DistilBERT ensemble**:
-1. **Primary model** — Best raw classification accuracy
-2. **Referee model** — Best-calibrated confidence scores
+The secondary model's confidence drives the final decision for each post:
 
-The referee's confidence drives the final decision:
-- If the referee is uncertain (confidence in the neutral band), the tweet is classified as neutral
-- If the referee is highly confident and disagrees with the primary, the referee's label is used
-- Otherwise, the primary model's label is used
+- **primary_default** — Primary model classification accepted (secondary model confidence supports the primary label)
+- **referee_override** — Secondary model overrides the primary classification (sufficient confidence in a different label)
+- **referee_neutral_band** — Forced neutral (secondary model confidence falls within an uncertainty band where neither label is reliable)
 
-This produces a 3-class output (positive, neutral, negative) from two binary classifiers, with the neutral class emerging from calibrated uncertainty rather than a dedicated training label.
+These decision sources are tracked per cycle in `hybrid_decision_stats.decision_sources`.
+
+### Version Identification
+
+Each record includes a `methodology_regime` field (`"v1"` or `"v2"`) and a `sentiment_model_version` field (`"v1.0"` or `"v2.0"`) enabling programmatic separation of data produced under different pipeline configurations.
+
+**Cutover timestamps:**
+- **Phase 1** (2026-02-16T05:14:00Z) — Updated sentiment models deployed. Records carry `methodology_regime: "v2"`.
+- **Phase 2** (2026-02-17T06:03:00Z) — Crypto relevance filter activated. Records additionally include `crypto_filter_enabled: true`.
+
+Data produced before February 16, 2026 carries `methodology_regime: "v1"`.
+
+### V1 Methodology (prior to February 2026)
+
+The original pipeline used a two-model DistilBERT ensemble without relevance filtering:
+- Posts were collected, deduplicated, and scored directly (no relevance filter step)
+- Both primary and referee models were DistilBERT-based
+- The same referee adjudication logic applied (primary_default, referee_override, referee_neutral_band)
 
 ---
 
@@ -80,7 +100,7 @@ Each watchlist session runs for **~120–130 minutes**:
 - Aggregated counts and mean scores per observation window
 - Confidence metrics from model predictions
 
-**Note on positive skew**: As is common in cryptocurrency-related social media discourse, sentiment language is heavily skewed positive. The dataset preserves this property rather than normalizing it. The sentiment mean reflects narrative tone, while post volume, balance, and silence capture structural changes in discourse.
+**Note on positive skew**: Sentiment language in cryptocurrency-related social media discourse is characteristically skewed positive. The V2 pipeline partially addresses this through improved negative sentiment recall and relevance filtering that removes non-crypto noise. The dataset continues to reflect observed narrative tone rather than normalized sentiment.
 
 ### Volume Context
 - Spot volume relative to historical norms
@@ -138,3 +158,5 @@ Tier 3 includes boolean flags indicating:
 Schema and methodology may evolve. Version numbers in metadata track changes:
 - `schema_version` — Document structure version
 - `archive_schema_version` — Version at time of archival
+- `methodology_regime` — Pipeline configuration version (`"v1"` or `"v2"`)
+- `sentiment_model_version` — Model generation (`"v1.0"` or `"v2.0"`)
