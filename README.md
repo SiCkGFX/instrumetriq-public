@@ -8,11 +8,11 @@
 </p>
 
 <p align="center">
-  <a href="https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH"><img src="https://img.shields.io/badge/Buy%20the%20full%20archive-18a0d1" alt="Buy the full archive"></a>&nbsp;
+  <a href="https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH"><img src="https://img.shields.io/badge/Buy%20the%20Tier%203%20archive-18a0d1" alt="Buy the Tier 3 archive"></a>&nbsp;
   <a href="https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"></a>&nbsp;
   <a href="https://doi.org/10.5281/zenodo.18508636"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.18508636-blue" alt="DOI"></a>&nbsp;
   <a href="https://github.com/SiCkGFX/instrumetriq-public/releases/latest"><img src="https://img.shields.io/github/v/release/SiCkGFX/instrumetriq-public?label=latest%20sample&color=blue" alt="Latest Release"></a>&nbsp;
-  <a href="./LICENSE.md"><img src="https://img.shields.io/badge/license-CC%20BY%204.0%20%2F%20eval--only-lightgrey" alt="License"></a>&nbsp;
+  <a href="./LICENSE.md"><img src="https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey" alt="License"></a>&nbsp;
   <img src="https://img.shields.io/badge/python-3.9%2B-3776ab" alt="Python 3.9+">&nbsp;
   <img src="https://img.shields.io/badge/format-Apache%20Parquet-50ABF1" alt="Apache Parquet">
 </p>
@@ -23,13 +23,13 @@
 
 Instrumetriq provides structured, research-grade data combining:
 
-- **Market microstructure** — Spot prices, spreads, depth, and liquidity metrics from Binance
-- **Social sentiment** — AI-classified X (Twitter) post sentiment with crypto relevance filtering and engagement context
-- **Temporal alignment** — Each asset monitored ~120–130 minutes with 10-second sampling
+- **Market microstructure**: Spot prices, spreads, depth, and liquidity metrics from Binance
+- **Social sentiment**: AI-classified X (Twitter) post sentiment with crypto relevance filtering and engagement context
+- **Temporal alignment**: Each asset monitored about 120 to 130 minutes with 10-second sampling
 
 The dataset is designed for quantitative research, backtesting, and building contextual models around crypto asset behavior.
 
-> **New here?** [Open the interactive demo in Google Colab](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb) — no install required.
+> **New here?** [Open the interactive demo in Google Colab](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb). No install required.
 
 ---
 
@@ -39,20 +39,20 @@ The dataset is designed for quantitative research, backtesting, and building con
 |--------|-----------------|----------------|-------------------|
 | Schema | Flat (19 columns) | Nested (8 columns) | Nested (12 columns) |
 | Spot data | Summary | Full | Full |
-| Futures data | — | — | ✓ |
+| Futures data | - | - | ✓ |
 | Sentiment | Counts only | Full cycle | Multi-window |
 | Scoring factors | Final only | All factors | All factors + flags |
-| Price time series | — | — | ✓ (700+ samples) |
+| Price time series | - | - | ✓ (700+ samples) |
 
 [Compare access tiers →](https://instrumetriq.com/access)
 
 ---
 
-## Buy the Full Tier 3 Archive
+## Buy the Tier 3 Archive
 
-The samples here are weekly snapshots. The complete **Tier 3 historical archive** is available as a one-time purchase: every record from December 15, 2025 to June 15, 2026 (481,829 records across 278 coins), the full nested schema, and 700+ price samples per record, delivered as a single download. No subscription.
+The samples here are weekly snapshots. The **Tier 3 historical archive** is available as a one-time purchase: every record from December 15, 2025 to June 15, 2026 (481,829 records across 278 coins), all 12 nested column groups, and 700+ price samples per record, delivered as a single download. No subscription.
 
-[![Buy the full archive](https://img.shields.io/badge/Buy%20the%20full%20archive-18a0d1?style=for-the-badge)](https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH)
+[![Buy the Tier 3 archive](https://img.shields.io/badge/Buy%20the%20Tier%203%20archive-18a0d1?style=for-the-badge)](https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH)
 
 ---
 
@@ -84,7 +84,7 @@ samples/
     └── {date}_tier1.csv
 ```
 
-**Quickest way to explore:** [Open the Colab notebook](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb) — loads the Tier 1 sample, shows schema, sentiment distribution, and liquidity analysis in your browser.
+**Quickest way to explore:** [Open the Colab notebook](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb). Loads the Tier 1 sample, shows schema, sentiment distribution, and liquidity analysis in your browser.
 
 Or run any inspection script locally (requires Python 3.9+):
 
@@ -99,10 +99,10 @@ python samples/inspect_parquets_schemas/inspect_tier1_schema.py
 
 Schema documentation with field-by-field descriptions for each tier:
 
-- [Tier 1 Schema Reference](./samples/schema_documentation/tier1_schema_reference.md) — 19 flat columns
-- [Tier 2 Schema Reference](./samples/schema_documentation/tier2_schema_reference.md) — 8 nested columns  
-- [Tier 3 Schema Reference](./samples/schema_documentation/tier3_schema_reference.md) — 12 nested columns with futures
-- [Methodology](./docs/METHODOLOGY.md) — Data collection, sentiment pipeline (V2: BERTweet + DistilBERT with crypto relevance filtering), and observation windows.
+- [Tier 1 Schema Reference](./samples/schema_documentation/tier1_schema_reference.md): 19 flat columns
+- [Tier 2 Schema Reference](./samples/schema_documentation/tier2_schema_reference.md): 8 nested columns  
+- [Tier 3 Schema Reference](./samples/schema_documentation/tier3_schema_reference.md): 12 nested columns with futures
+- [Methodology](./docs/METHODOLOGY.md): Data collection, sentiment pipeline (V2: BERTweet + DistilBERT with crypto relevance filtering), and observation windows.
 
 ### File Format
 
@@ -135,4 +135,12 @@ See [CITATION.cff](./CITATION.cff) for a machine-readable citation file.
 
 ## License
 
-Sample data is provided for evaluation purposes. Full dataset access requires a subscription. See [LICENSE.md](./LICENSE.md) for terms.
+Three products, three licenses:
+
+| Product | License | Commercial use | Redistribute raw data |
+|---|---|---|---|
+| Free samples (this repo) | CC BY 4.0 | Allowed, with attribution | Allowed, with attribution |
+| Subscription access (Patreon) | Personal / internal use | No | No |
+| One-time commercial archive | Commercial use | Yes | No |
+
+The samples and documentation in this repository are **CC BY 4.0**: use them freely, including commercially, with attribution. The full dataset is licensed separately. See [LICENSE.md](./LICENSE.md) and the [full terms](https://instrumetriq.com/legal/terms).
