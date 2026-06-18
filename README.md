@@ -47,6 +47,14 @@ The dataset is designed for quantitative research, backtesting, and building con
 
 ---
 
+## Buy the Full Tier 3 Archive
+
+The samples here are weekly snapshots. The complete **Tier 3 historical archive** is available as a one-time purchase: every record from December 15, 2025 to June 15, 2026 (481,829 records across 278 coins), the full nested schema, and 700+ price samples per record, delivered as a single download. No subscription.
+
+[**Buy the full archive →**](https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH)
+
+---
+
 ## Free Samples
 
 Sample parquet files are available in the [`/samples`](./samples) directory, organized by week. New samples are added weekly.
