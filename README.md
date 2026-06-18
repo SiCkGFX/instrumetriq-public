@@ -51,7 +51,7 @@ The dataset is designed for quantitative research, backtesting, and building con
 
 The samples here are weekly snapshots. The complete **Tier 3 historical archive** is available as a one-time purchase: every record from December 15, 2025 to June 15, 2026 (481,829 records across 278 coins), the full nested schema, and 700+ price samples per record, delivered as a single download. No subscription.
 
-[**Buy the full archive →**](https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH)
+[![Buy the full archive](https://img.shields.io/badge/Buy%20the%20full%20archive-18a0d1?style=for-the-badge)](https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH)
 
 ---
 
