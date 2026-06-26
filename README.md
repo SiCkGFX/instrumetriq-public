@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH"><img src="https://img.shields.io/badge/Buy%20the%20Tier%203%20archive-18a0d1" alt="Buy the Tier 3 archive"></a>&nbsp;
+  <a href="https://instrumetriq.gumroad.com/l/crypto-market-sentiment-dataset"><img src="https://img.shields.io/badge/Buy%20the%20Tier%203%20archive-18a0d1" alt="Buy the Tier 3 archive"></a>&nbsp;
   <a href="https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/samples/Instrumetriq_Dataset_Demo_Colab.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"></a>&nbsp;
   <a href="https://doi.org/10.5281/zenodo.18508636"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.18508636-blue" alt="DOI"></a>&nbsp;
   <a href="https://github.com/SiCkGFX/instrumetriq-public/releases/latest"><img src="https://img.shields.io/github/v/release/SiCkGFX/instrumetriq-public?label=latest%20sample&color=blue" alt="Latest Release"></a>&nbsp;
@@ -52,7 +52,7 @@ The dataset is designed for quantitative research, backtesting, and building con
 
 The samples here are weekly snapshots, one day per week. The **Tier 3 historical archive** is the complete daily history: all 183 consecutive days from December 15, 2025 to June 15, 2026 (481,829 records across 278 coins), about 7 times the coverage of the samples, with all 12 nested column groups and 700+ price samples per record, in a single download. No subscription.
 
-[![Buy the Tier 3 archive](https://img.shields.io/badge/Buy%20the%20Tier%203%20archive-18a0d1?style=for-the-badge)](https://instrumetriq.lemonsqueezy.com/checkout/buy/1dcafa50-2e5c-4893-95b5-df80ddea1780?checkout%5Bdiscount_code%5D=LAUNCH)
+[![Buy the Tier 3 archive](https://img.shields.io/badge/Buy%20the%20Tier%203%20archive-18a0d1?style=for-the-badge)](https://instrumetriq.gumroad.com/l/crypto-market-sentiment-dataset)
 
 ---
 
