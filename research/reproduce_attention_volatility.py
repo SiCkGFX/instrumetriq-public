@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Reproduce the Instrumetriq research note "Social attention spikes precede larger
-intraday price moves, not directional ones".
+intraday price moves in either direction".
 
 Self-contained: reads a set of Tier 3 parquet files and reproduces the attention ->
 large-move lift with a day-level block-bootstrap confidence interval, using only the

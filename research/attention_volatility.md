@@ -1,8 +1,8 @@
-# Social attention spikes precede larger intraday price moves, not directional ones
+# Social attention spikes precede larger intraday price moves in either direction
 
 **Instrumetriq | Research Note | July 2026**
 
-**DOI:** [10.5281/zenodo.21254202](https://doi.org/10.5281/zenodo.21254202) | **Companion note:** [10.5281/zenodo.21254206](https://doi.org/10.5281/zenodo.21254206)
+**DOI:** [10.5281/zenodo.21254201](https://doi.org/10.5281/zenodo.21254201) | **Companion note:** [10.5281/zenodo.21254205](https://doi.org/10.5281/zenodo.21254205)
 
 ## Abstract
 Using 362,813 coin-sessions with observable social activity and a computable baseline, drawn
@@ -13,9 +13,10 @@ precedes a larger price move in the following ~2-hour window. When a coin's coun
 posting authors rises to at least 6x its own recent baseline, the observed rate of a large
 intraday move (a price excursion of at least +/-4% in either direction) is roughly three to four
 times the rate on normal-attention sessions, and this holds within every sub-period and
-move-size measured. The additional movement is direction-symmetric: at a matched threshold,
-attention spikes are observed alongside larger moves up and down in similar proportion. Higher
-attention is observed alongside higher volatility, not higher returns.
+move-size measured. The larger moves are symmetric in sign: at a matched threshold, attention
+spikes are observed alongside larger moves up and down in similar proportion, and the mean return
+of spike sessions stays close to zero. Higher attention is observed alongside higher volatility,
+and it carries no directional information.
 
 ## 1. Scope of pre-specification
 The question, the attention-spike definition, the outcome window, and the development/held-out
@@ -90,11 +91,11 @@ Every interval is above 1. The result is not an artifact of the 4% threshold: at
 are 3.16 / 2.66 / 2.21x, and at 5% they are 5.37 / 5.50 / 3.95x (V1 / V2dev / V2hold), all with
 intervals above 1.
 
-**The moves are direction-symmetric.** Decomposing the large move at a matched +/-4% threshold,
+**The larger moves are symmetric in sign.** Decomposing the large move at a matched +/-4% threshold,
 spike sessions show an elevated rate of a +4% upside move and a -4% downside move in similar
 proportion (V1: 11.5% up / 13.2% down; V2dev: 8.5% / 7.0%; V2hold: 8.1% / 9.5%), against ~2-3%
 for normal sessions on both sides, and the mean signed return of spike sessions is approximately
-zero. The measured association is with volatility, not with direction.
+zero. The measured association is with the size of the move; its direction is close to random.
 
 **The result reproduces on the free sample.** The headline uses a multi-day trailing baseline
 that the free weekly sample (one non-contiguous day - Sunday - per week) cannot reproduce. Using
@@ -119,8 +120,8 @@ directly (see Section 7).
   effective sample behind each interval.
 
 ## 6. What this does not mean
-- This is not a directional signal. Direction-symmetric movement is not tradable as "buy the
-  spiking coin"; the elevated downside is as large as the upside.
+- The signal concerns volatility only, and gives no directional edge: the symmetric movement
+  cannot be traded as "buy the spiking coin," because the elevated downside is as large as the upside.
 - It does not claim that social sentiment (positive vs negative tone) predicts returns - a
   separate question addressed in the companion note.
 - The ~2 h horizon and the spike threshold are fixed choices; other definitions may differ.

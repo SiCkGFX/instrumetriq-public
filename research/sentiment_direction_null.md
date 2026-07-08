@@ -2,7 +2,7 @@
 
 **Instrumetriq | Research Note | July 2026**
 
-**DOI:** [10.5281/zenodo.21254206](https://doi.org/10.5281/zenodo.21254206) | **Companion note:** [10.5281/zenodo.21254202](https://doi.org/10.5281/zenodo.21254202)
+**DOI:** [10.5281/zenodo.21254205](https://doi.org/10.5281/zenodo.21254205) | **Companion note:** [10.5281/zenodo.21254201](https://doi.org/10.5281/zenodo.21254201)
 
 ## Abstract
 Using 364,474 coin-sessions with observable, scored social activity, drawn from the Instrumetriq
@@ -18,7 +18,8 @@ two intervals that do exclude zero (same-session and two-ahead) are negligibly s
 *negatively* signed - opposite to a bullish-tone-leads-gains hypothesis. This
 is a **bounded null**: over this horizon there is no detectable directional lead from sentiment
 tone, with the stated caveat below that the measurement can only partially detect bearish tone. It is the direction-side complement to the companion note, which
-finds that a *surge in attention* (regardless of tone) precedes larger, direction-symmetric moves.
+finds that a *surge in attention* (regardless of tone) precedes higher volatility (larger moves up
+and down in similar proportion).
 
 ## 1. Scope of pre-specification
 The question (does tone lead direction?), the tone measures, the outcome (signed forward return),
@@ -72,7 +73,7 @@ IC each time from the sessions pooled over the resampled days, and take the 2.5t
 percentiles. Days (not sessions) are resampled because coin-sessions are strongly cross-correlated
 within a day (see the companion note).
 
-**Free-sample variant (specified here, not retrofitted).** The cross-session lag above needs
+**Free-sample variant (pre-specified here).** The cross-session lag above needs
 *consecutive* sessions, which the free weekly sample (one non-contiguous Sunday per week) cannot
 provide across days. Within a single Sunday, however, a coin has several same-day sessions, so the
 identical test runs with the horizon-k pairing restricted to **same-day** sessions
@@ -128,7 +129,7 @@ reproduces on public data (see Section 7), with wider intervals (and, on this sm
 now straddles zero rather than tightening below it) reflecting the smaller sample.
 
 ## 5. Robustness & limitations
-- **This is a bound over a short horizon, not a proof of "no relationship."** Across the
+- **This is a bound over a short horizon; it does not prove there is no relationship.** Across the
   no-look-ahead horizons (k = 0, +1, +2 sessions, ~2-8 h), on the full-archive analysis set every
   95% interval edge stays within |IC| = 0.013 (the smaller free-sample intervals are wider; Section 4), and
   the largest pooled point estimate is 0.007. Longer horizons, non-linear encodings of tone, or
@@ -153,8 +154,9 @@ now straddles zero rather than tightening below it) reflecting the smaller sampl
   posts are gives no usable edge on the *direction* of its next move, at this horizon and by this
   measurement.
 - **Does not mean:** that social data is uninformative. The companion note shows a *surge in
-  attention* (independent of tone) precedes larger, direction-symmetric moves - a volatility signal,
-  not a direction one. Tone-null and attention-informative are consistent and complementary.
+  attention* (independent of tone) precedes higher volatility (larger moves up and down in similar
+  proportion) - a volatility signal that carries no directional information. Tone-null and
+  attention-informative are consistent and complementary.
 - **Does not mean:** that no directional relationship exists at any horizon or under any better tone
   measurement - see the recall caveat above.
 - **In context:** Bollen, Mao & Zeng (2011) reported a Twitter-mood -> market link; Lachanski & Pav
