@@ -38,6 +38,21 @@ to note 1.
 - **Run the reproduction:** [Open in Colab](https://colab.research.google.com/drive/1V3owwQ-cLJf8RRqK3M7Kib3pQdSb52cM?usp=sharing)
 - **Code:** [reproduce_sentiment_direction.py](reproduce_sentiment_direction.py) | [notebook](Sentiment_Direction_Reproduction_Colab.ipynb)
 
+## 3. Social attention adds no predictive power for intraday move size beyond price volatility
+
+Attention spikes precede larger moves (note 1), but that is because attention and price volatility rise
+together. Judged as a predictor - does it rank which coins will make a large move? - attention scores barely
+above a coin flip (AUC ~0.53), while a price-only volatility reading (the 24-hour price range at admission)
+ranks movers well (~0.80). Adding attention on top of volatility changes the out-of-sample ranking by 0.000,
+and a positive control confirms the test would detect real added value if attention had any. Attention is a
+shadow of volatility, not an independent predictor of move size. This is the magnitude-side complement to
+notes 1 and 2. Measured on 380,932 coin-sessions (2025-12-15 to 2026-07-15); reproduces on the free weekly
+samples.
+
+- **Note:** [attention_incremental_null.md](attention_incremental_null.md) - DOI [10.5281/zenodo.21468030](https://doi.org/10.5281/zenodo.21468030)
+- **Run the reproduction:** [Open in Colab](https://colab.research.google.com/github/SiCkGFX/instrumetriq-public/blob/main/research/Attention_Incremental_Null_Reproduction_Colab.ipynb)
+- **Code:** [reproduce_attention_incremental_null.py](reproduce_attention_incremental_null.py) | [notebook](Attention_Incremental_Null_Reproduction_Colab.ipynb)
+
 ---
 
 ## Reproduction
