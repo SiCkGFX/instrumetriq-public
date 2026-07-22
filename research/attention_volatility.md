@@ -108,7 +108,10 @@ measurement and the intraday one is only the reproducibility check; and (ii) the
 Sundays only, and the effect is stronger on Sundays: restricting the archive to its own Sundays and
 applying the identical intraday computation gives 2.16x [1.38-3.47], consistent with the
 free-sample figure. A reader with only the free weekly samples can therefore reproduce this number
-directly (see Section 7).
+directly (see Section 7). The free-sample lift is computed on the weekly samples available at the
+computation date (2026-07-08). Because the weekly sample set grows by one Sunday each week, a reader
+running this reproduction later gets a slightly different free-sample lift; the full-archive result
+and the direction of the finding are unchanged.
 
 ## 5. Robustness & limitations
 - Holds within both methodology regimes (V1, V2) and out-of-sample (held-out window).

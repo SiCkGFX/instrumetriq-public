@@ -126,7 +126,10 @@ reproduces directly too. The forward ICs are `mean_score`: k=0 -0.007 [-0.020, +
 k=+1 -0.008 [-0.024, +0.007], k=+2 -0.005 [-0.017, +0.009]; `pos_ratio`: k=0 -0.006 [-0.019, +0.008],
 k=+1 -0.007 [-0.024, +0.008], k=+2 -0.003 [-0.014, +0.011]. Every interval straddles zero - the null
 reproduces on public data (see Section 7), with wider intervals (and, on this smaller sample, a k=0 that
-now straddles zero rather than tightening below it) reflecting the smaller sample.
+now straddles zero rather than tightening below it) reflecting the smaller sample. These free-sample ICs
+are computed on the weekly samples available at the computation date (2026-07-08). As further weekly
+samples accumulate, the free-sample point estimates shift slightly and the intervals narrow; the
+full-archive result and the finding are unchanged.
 
 ## 5. Robustness & limitations
 - **This is a bound over a short horizon; it does not prove there is no relationship.** Across the
